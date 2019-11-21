@@ -1,0 +1,14 @@
+create table userrole(userName varchar2(20) primary key,password varchar2(20), roleCode varchar(20));
+insert into userrole values('root','root','admin');
+insert into userrole values('John','abc123','agent');
+insert into userrole values('David','abc123','insured');
+
+create table accounts(accountNumber number(10) primary key,insuredName varchar(30),insuredStreet varchar(30),insuredCity varchar(15),insuredState varchar(15),insuredZip number(5),businessSegment varchar(30),userName varchar(20) references userrole(userName));
+
+create table policy(policyNumber number(10) primary key, policyPremium number(8,2),accountNumber number(10) references accounts(accountNumber));
+
+create table policydetails(policyNumber number(10) references policy(policyNumber),polQuesId varchar(10) references policyQuestions(polQuesId),answer varchar(30))
+
+create table businessSegment(busSegId varchar(10),busSegName varchar(20));
+
+create table policyQuestions(polQuesId varchar(10) primary key,busSegId varchar(10) references businesssegment(busSegId),polQues varchar(80),polAns1 varchar(30), polAns1Weig number(5),polAns2 varchar(30), polAns2Weig number(5),polAns3 varchar(30), polAns3Weig number(5));
